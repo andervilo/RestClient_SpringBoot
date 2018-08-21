@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org" lang="pt-br"
+	layout:decorate="@{/layout}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Novo Contato</title>
+</head>
+<body >
+	<th:block layout:fragment="content">
+		<div class="container"></div>
+		<form class="needs-validation" novalidate method="POST"
+			th:object="${contato}" th:action="@{/contatos}" style="margin: 20px 0">
+			<div class="form-group">
+				<div class="container">
+					<div class="panel panel-primary" style="margin: 10px">
+						<div class="panel-heading">
+							<h1 class="panel-title">Novo Contato</h1>
+						</div>
+						<div class="panel-body">
+							<input type="hidden" id="id" th:field="*{id}" readonly="readonly" />
+							<div class="col-md-12 mb-3">
+								<input type="text" class="form-control" id="nome"
+									placeholder="Nome" value="" required th:field="*{nome}">
+							</div>
+							<div class="col-md-12 mb-3">
+								<input type="text" class="form-control" id="email"
+									placeholder="E-mail" value="" required th:field="*{email}">
+							</div>
+							<div class="col-md-12 mb-3">
+								<input type="text" class="form-control" id="telefone"
+									placeholder="Telefone" value="" required th:field="*{telefone}">
+							</div>							
+
+							<div class="">
+								<div class="col-md-6 mb-3">
+									<button type="submit" class="btn btn-success"> Salvar</button>
+									<a class="btn btn-warning" th:href="@{/contatos}"> Cancelar</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</th:block>
+</body>
+</html>

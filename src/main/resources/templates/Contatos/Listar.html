@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="pt-br"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="@{/layout}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Listar Contatos</title>
+</head>
+<body class="container">
+	<section layout:fragment="content">
+		<div class="row">
+			<div class="col-md-4"><h2>Lista de Contatos</h2></div>
+			<div class="col-md-4 ml-auto" align="right"><a class="btn btn-success " th:href="@{/contatos/novo}">Novo Contato</a></div>
+		</div>
+		<div class="panel panel-success" style="margin: 10px">
+			
+			
+			<div class="panel-body">
+				<table id="mytable" class="table table-striped table-hover table-sm">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Telefone</th>
+							<th>E-mail</th>
+							<th colspan="2">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="contato : ${contatos}">
+							<td th:hidden="${contato.id}"></td>
+							<td >
+								<span class="label label-default" th:text="${contato.nome}"></span>
+							</td>
+							<td >
+								<span class="label label-default" th:text="${contato.telefone}"></span>
+							</td>
+							<td >
+								<span class="label label-default" th:text="${contato.email}"></span>
+							</td>
+							<td>
+								<a class="btn btn-warning btn-sm" th:href="@{contatos/editar/{id}(id=${contato.id})}">
+									Editar
+								</a>
+							</td>
+							<td>
+								<form th:action="@{contatos/delete/{id}(id=${contato.id})}" method="POST">
+									<button type="submit" class="btn btn-danger btn-sm"> Excluir</button>
+								</form>
+								
+						
+								
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+	</section>
+</body>
+</html>
