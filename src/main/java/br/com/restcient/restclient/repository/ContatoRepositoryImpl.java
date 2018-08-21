@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,12 +29,37 @@ public class ContatoRepositoryImpl implements ContatoRepository{
 
 	@Override
 	public List<Contato> getAll() {	
-		return Arrays.stream(this.restTemplate .getForObject(url, Contato[].class)).collect(Collectors.toList());			
+		try {
+			ResponseEntity<Contato[]> response = this.restTemplate.getForEntity(url, Contato[].class);
+			if(response.getStatusCodeValue() == 200){
+				return Arrays.stream(response.getBody()).collect(Collectors.toList());
+			}
+		}catch (HttpClientErrorException ex) {
+			
+			if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
+				return null;
+		    }
+		}
+		return null;
 	}
 
 	@Override
-	public Contato getById(Integer id) {		
-		return this.restTemplate.getForObject(url+"/"+id, Contato.class);
+	public Contato getById(Integer id) {	
+		ResponseEntity<Contato> response = null ;
+		
+		try {
+			response = this.restTemplate.getForEntity(url+"/"+id, Contato.class);
+			if(response.getStatusCode().is2xxSuccessful()){
+				return response.getBody();
+			}
+		} catch (HttpClientErrorException ex) {
+			
+			if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
+				return null;
+		    }
+		}
+		return null;
+		
 	}
 
 	@Override

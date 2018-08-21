@@ -2,6 +2,7 @@ package br.com.restcient.restclient.repository;
 
 import java.util.List;
 
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 
 import br.com.restcient.restclient.model.Contato;
